@@ -4,11 +4,8 @@ from google.cloud.language_v1 import enums
 import six
 
 
-#input: list of strings
-#output: list of sentiment scores
-
-
 def analyze_sentiment(content):
+
     client = language_v1.LanguageServiceClient()
 
     # content = 'Your text to analyze, e.g. Hello, world!'
@@ -25,5 +22,3 @@ def analyze_sentiment(content):
     print('Magnitude: {}'.format(sentiment.magnitude))
     return sentiment.score
 
-
-# print(analyze_sentiment("hello, i am very very happy"))
