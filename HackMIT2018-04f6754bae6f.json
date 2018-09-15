@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "citric-glow-216519",
+  "private_key_id": "04f6754bae6f15e83c22cddf90009ea299a74f56",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDNlFwU8Sy7rSQm\nWIUFWJqYQIYNvwDeOGRPOsFgV35zZmSdSrpdN597abIQeHrvV0wBEP2pI2Pv9L70\nE1serLQZxwybW4Ek10h5nHVGxxgFw2E2GBzvw1BU4ub9chfdGqO+B3Z4keo/9HrK\nktqEozofZx9H3arstRxKoP2gHt0rxRC0zjMThCsVV21OD9QPzQ8kg5ntGl4MCfxX\naZHOIxBl0XZ+ohjm7dtPLCBXQxk7ggvOHaKuOymqVhepqUvzvGrsE7c6eGoSq+ad\nGCjlIbn1edKiy3+vstq1miKiAzg8oTiVNvtrzElfFgF+XlQipcjWuw5jjJNDL1w4\naph83vI9AgMBAAECggEAA3n2CaufZkgSA6z9CN9b8+WpbquTc+6PsbBMa1jnbEOn\nwWotVxy073UU3Abxi0EWabE0HOtaigkBPqbiJFVm0UXGrozgVPNoCBhvekQtIZHR\nf8TuHlbW8ayJm/EVOrmz2aeOJxFOnQjBF9JebB5HghbwFjrHJGwWn6NzzoSfGFmb\nvVmmFV6BnNy9vdXb4TaKltx2HHwSKC7eHlfSAi3E3YmNP62lJ8BjyJxMRIHvOIxU\n2eGsIN2QSdndKrC+b6feyOeiDhTw1wkCoTnHInOQEEBoVkDWOItzlOlzW/0OTJxd\n43FT42anRnht9ASRZ3nUUfrZRze2aV4u8aun0nm7iQKBgQD1GOKt+EGtVABrH+GQ\na6AuIrLXLWtvrxO7vDDiLhn3W4crM8CvctcD+sN1qc878LUUdpcOWcWZIxO7C9Qr\npgiJIYGlFzX2AEe2F7luBjCMINWxst9q1CnBwmGJhoRoSJTGJB+cn2/pNwCoUqwr\nFuKYUEZP5J1x8rBSPySdaSVkqQKBgQDWuXSSrFyKQmJcbIavf8/VbA+2k4VvUKfg\nHglPAwKtcPyOV+YDNFMB1StsaWDBLC6G6enKFdC21eC0YctlKcUa11ofI6owKjfq\neZxShhQ6os+JBV1VKMNzwzl1myO74EKdkPn1H4JkK53Tfp5BSk7ffXdIf/nIps8B\nsRCB1Q4JdQKBgQChayRPY0MN/lbQNoz96oPyHpQeNyGcynd6mvSu4aHkUPlysIDk\njAOj8VEtewqq9VqtAXV21BTZSErEU4QGwzC378NMkT7Op1yTRoivN5BdmXpjr+SI\nnPZrT7OhOWCWtcaVwFC5fB/ePoVGVjxhnI7btXK5R12SID2TzVY1/XvNEQKBgQCg\nAJPIE93lPLBU1J3MOr5g92QCFY1RtFVT4K3pDYI6Qb5AR2ljK+NKs1DnOOLbLxQA\nfl8ysezTwS3u3AyW9ngklyJVn9rahyshcrs0lyqNwvJI1RGGOpjiMzAm3ZLUFbkt\n9nD74h3kjMfPaEN+vWNmj/SJtqsnhH0ucoWtaVhLXQKBgBC6nTCjf1ku6nPnEgnC\npbEI/VnkJBZmSo3uGI9X1kawpMGLMYEkXOhNBROvg6yGOpT83rbyU0IMhpYD5nR+\nNw5eSgOdgn+wXYLxCPH19aK4FDSNSvPKoccRjCIiTx6aPqmyYMprkuH8sDA9vR1i\n1rkESRl7QxEMQ5mR48fAKXSp\n-----END PRIVATE KEY-----\n",
+  "client_email": "hackmit2018-serviceaccountname@citric-glow-216519.iam.gserviceaccount.com",
+  "client_id": "101282839536584684643",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/hackmit2018-serviceaccountname%40citric-glow-216519.iam.gserviceaccount.com"
+}
