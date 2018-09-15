@@ -13,25 +13,23 @@ def image_ocr(file_path):
         content = file.read()
 
     image = vision.types.Image(content=content)
-
     # Perform OCR through cloud
     response = client.text_detection(image=image)
-
     # Hard code field values
     text = response.text_annotations[0].description
 
     return text
 
 
-def get_quoted_strs(text):
+def split_str_and_get_quoted(text):
     strs = text.split('\"')
-    is_quoted = [(True if i % 2 == 1 else False) for i in range(len(strs))]
-    return strs, is_quoted
+    quoted_indices = list(range(1, len(strs), 2))
+    return strs, quoted_indices
 
 
 if __name__ == '__main__':
     text = image_ocr('test-txt.jpeg')
-    strs, is_quoted = get_quoted_strs(text)
+    strs, quoted_indices = split_str_and_get_quoted(text)
 
 
 
