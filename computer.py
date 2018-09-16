@@ -4,7 +4,7 @@ from OCR import *
 from sentiment_analysis import *
 from text_to_speech import *
 
-def final_audio_from_image(img_path):
+def final_audio_from_image(img_path, audio_outpath):
 
     text = image_ocr(img_path)
     strs, quoted_indices = split_str_and_get_quoted(text)
@@ -23,7 +23,6 @@ def final_audio_from_image(img_path):
     print('strs:\n', strs)
     print('sentiments:\n', sentiments)
 
-
     # Calculate pitch offset for each string
     pitch_amp_constant = 30
     pitch_offsets = [sent * pitch_amp_constant for sent in sentiments]
@@ -37,15 +36,14 @@ def final_audio_from_image(img_path):
         else:
             genders.append(default_gender)
 
-    audio_filename = 'audio_shaw.mp3'
-
     # Make audio
-    voiceOutput(pitch_offsets, genders, strs, audio_filename)
+    voiceOutput(pitch_offsets, genders, strs, audio_outpath)
 
 
 if __name__ == '__main__':
     import sys
     image_path = sys.argv[1]
+    audio_outpath = 'output.mp3'
     # image_path = 'test-quotes.jpeg'
-    final_audio_from_image(image_path)
+    final_audio_from_image(image_path, audio_outpath)
 

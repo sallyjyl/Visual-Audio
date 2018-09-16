@@ -7,8 +7,6 @@ from google.cloud import texttospeech
 from google.cloud import translate
 
 def voiceOutput(pitchInput, genderInput, textInput, filename):
-    #responseArray = []
-
     with open(filename, 'wb') as out:
         # Set the text input to be synthesized
         for i in range (len(textInput)):
