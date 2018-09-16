@@ -22,7 +22,20 @@ def image_ocr(file_path):
 
 
 def split_str_and_get_quoted(text):
-    strs = text.split('\"')
+    chars = list(text)
+
+    # Convert '\n' to periods or spaces
+    for i, c in enumerate(chars):
+        if c == '\n':
+            if i < len(chars) - 1 and chars[i + 1].isupper():
+                chars[i] = '. '
+            else:
+                chars[i] = ' '
+
+    text = ''.join(chars)
+
+    # Split by quotes to get quoted strings
+    strs = text.split('\"'))
     quoted_indices = list(range(1, len(strs), 2))
     return strs, quoted_indices
 
