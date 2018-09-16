@@ -1,5 +1,6 @@
 import io
 import os
+import re
 
 # Google Cloud APIs
 from google.cloud import vision
@@ -35,7 +36,7 @@ def split_str_and_get_quoted(text):
     text = ''.join(chars)
 
     # Split by quotes to get quoted strings
-    strs = text.split('\"'))
+    strs = text.split('\"')
     quoted_indices = list(range(1, len(strs), 2))
     return strs, quoted_indices
 
