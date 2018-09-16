@@ -6,6 +6,7 @@
 
 import os
 import flask
+import time
 
 from werkzeug.utils import secure_filename
 
@@ -54,7 +55,8 @@ def uploads():
             flask.flash('No selected file')
             return flask.redirect(flask.request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename = secure_filename(file.filename) + str(time.time())
+            #print('file: ' + filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             if not os.path.exists(app.config['UPLOAD_FOLDER']):
                 os.makedirs(app.config['UPLOAD_FOLDER'])
