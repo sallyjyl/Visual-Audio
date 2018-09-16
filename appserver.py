@@ -1,5 +1,5 @@
 # Find your machines IP address
-# python appserver.py
+# python3 appserver.py
 #
 # Open web browser on another device connected to same LAN
 # Go to <IP address>:5000
@@ -32,6 +32,7 @@ def allowed_file(filename):
 def uploads():
     upload_html = '''
     <!doctype html>
+    <img src="VisualAudio.jpg" alt="VisualAudio" width="30%" height="30%">
     <title>Upload new File</title>
     <h1>Upload new File</h1>
     <form method=post enctype=multipart/form-data>
@@ -87,6 +88,10 @@ def uploads():
 @app.route('/text_sound/<filename>')
 def sound_file(filename):
     return flask.send_from_directory('./', filename)
+
+@app.route('/VisualAudio.jpg')
+def vis_audio():
+    return flask.send_from_directory('./', 'VisualAudio.jpg')
 
 if __name__ == '__main__':
     #app.run()
