@@ -35,8 +35,13 @@ def split_str_and_get_quoted(text):
 
     text = ''.join(chars)
 
-    # Split by quotes to get quoted strings
+    # Split by quotes, filter, to get quoted strings
     strs = text.split('\"')
+    good_strs = []
+    for s in strs:
+        if re.search('[A-Za-z]', s):
+            good_strs.append(s)
+
     quoted_indices = list(range(1, len(strs), 2))
     return strs, quoted_indices
 

@@ -25,7 +25,7 @@ def final_audio_from_image(img_path):
 
 
     # Calculate pitch offset for each string
-    pitch_amp_constant = 20
+    pitch_amp_constant = 30
     pitch_offsets = [sent * pitch_amp_constant for sent in sentiments]
 
     # Fake genders for reading for now

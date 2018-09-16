@@ -12,12 +12,14 @@ def voiceOutput(pitchInput, genderInput, textInput, filename):
     with open(filename, 'wb') as out:
         # Set the text input to be synthesized
         for i in range (len(textInput)):
-
-            print(textInput[i])
-
             # Instantiates a client
             client = texttospeech.TextToSpeechClient()
             lang = detectLanguage(textInput[i])
+
+            # Hardcode to skip non enlglish
+            if lang != 'en':
+                continue
+
             synthesis_input = texttospeech.types.SynthesisInput(text=textInput[i])
             if (genderInput[i] == 'f'):
                 gender = texttospeech.enums.SsmlVoiceGender.FEMALE
@@ -30,11 +32,15 @@ def voiceOutput(pitchInput, genderInput, textInput, filename):
                 language_code=lang,
                 ssml_gender=gender)
 
+            pace = 0.8
+            if abs(pitchInput[i]) >= 6:
+                pace += 0.2
+
             # Select the type of audio file you want returned
             audio_config = texttospeech.types.AudioConfig(
                 audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-                pitch=pitchInput[i],
-                speaking_rate=0.8) # 1 is the normal speed
+                pitch=pitchInput[i] - 3,
+                speaking_rate=pace) # 1 is the normal speed
 
             # Perform the text-to-speech request on the text input with the selected
             # voice parameters and audio file type
@@ -53,9 +59,6 @@ def detectLanguage(text):
     translate_client = translate.Client()
     result = translate_client.detect_language(text)
     res = format(result['language'])
-    # Filter unknown
-    if res == 'und':
-        res = 'en'
     return res
 
 def matchCountryCode(lang):
