@@ -9,7 +9,7 @@ import flask
 
 from werkzeug.utils import secure_filename
 
-from pygame import mixer
+#from pygame import mixer
 
 import computer
 
@@ -30,6 +30,16 @@ def allowed_file(filename):
 
 @app.route('/uploads', methods=['GET', 'POST'])
 def uploads():
+    upload_html = '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''
+
     if flask.request.method == 'POST':
         print (flask.request)
         # check if the post request has the file part
@@ -50,30 +60,33 @@ def uploads():
             file.save(filepath)
             url_and_keyword = computer.final_audio_from_image(
                     filepath, filename+'.mp3')
-            mixer.init()
-            mixer.music.load(filename+'.mp3')
-            mixer.music.play()
-            raw_html = '<!doctype html>\n'
+            #mixer.init()
+            #mixer.music.load(filename+'.mp3')
+            #mixer.music.play()
+
+            upload_html += '''
+            <audio controls>
+              <source src="text_sound/%s.mp3" type="audio/mp3">
+            </audio>
+            ''' % filename
+
             for (url, keyword) in url_and_keyword:
                 print (url +' ' + keyword)
-                raw_html += '<h1>%s</h1>\n' % keyword
-                raw_html += '<img src="%s" alt="%s">\n' % (url, keyword)
-            return raw_html
+                upload_html += '<h1>%s</h1>\n' % keyword
+                upload_html += '<img src="%s" alt="%s">\n' % (url, keyword)
+            return upload_html
             #return flask.redirect(flask.url_for('uploaded_file',
             #                        filename=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return flask.send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    return upload_html
+
+#@app.route('/uploads/<filename>')
+#def uploaded_file(filename):
+#    return flask.send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/text_sound/<filename>')
+def sound_file(filename):
+    return flask.send_from_directory('./', filename)
 
 if __name__ == '__main__':
     #app.run()
