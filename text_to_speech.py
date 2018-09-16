@@ -6,6 +6,9 @@ Note: ssml must be well-formed according to:
 from google.cloud import texttospeech
 from google.cloud import translate
 
+def clip_value(val, lo, hi):
+    return min(hi, max(val, lo))
+
 def voiceOutput(pitchInput, genderInput, textInput, filename):
     with open(filename, 'wb') as out:
         # Set the text input to be synthesized
@@ -37,7 +40,7 @@ def voiceOutput(pitchInput, genderInput, textInput, filename):
             # Select the type of audio file you want returned
             audio_config = texttospeech.types.AudioConfig(
                 audio_encoding=texttospeech.enums.AudioEncoding.MP3,
-                pitch=pitchInput[i] - 3,
+                pitch=clip_value(pitchInput[i] - 3, -20, 20),
                 speaking_rate=pace) # 1 is the normal speed
 
             # Perform the text-to-speech request on the text input with the selected

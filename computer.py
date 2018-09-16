@@ -48,6 +48,7 @@ def final_audio_from_image(img_path, audio_outpath):
 
     # Make audio
     voiceOutput(pitch_offsets, genders, strs, audio_outpath)
+    print(url_and_keyword)
     return url_and_keyword
 
 
