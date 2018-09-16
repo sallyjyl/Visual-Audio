@@ -52,7 +52,10 @@ def search_for_image(input_keyword):
 
     intermediate = r.json()
     # Get a random image url
-    return random.choice(intermediate['items'])['link']
+    if 'items' not in intermediate:
+        return search_for_image('socks')
+    else:
+        return random.choice(intermediate['items'])['link']
 
 def download_jpg(pic_url):
     with open('pic_1.jpg', 'wb+') as handle:
