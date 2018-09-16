@@ -59,8 +59,7 @@ def search_for_image(input_keyword):
     # print(r.json())
 
     intermediate = r.json()
-
-
+    
     return intermediate["items"][0]["link"]
 
 # print(search_for_image(str(classify_text(test_text))))

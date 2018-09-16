@@ -12,12 +12,22 @@ def final_audio_from_image(img_path, audio_outpath):
     # Calculate sentiment for each string
     # 0 if not quoted
     sentiments = []
+    url_and_keyword = []
     for i in range(len(strs)):
         if i not in quoted_indices:
             sentiments.append(0)
         else:
             sentiment = analyze_sentiment(strs[i])
             sentiments.append(sentiment)
+
+        words = [word for word in re.split(' +', strs[i]) if word != '']
+        strs[i] = ' '.join(words)
+        new_s = ''
+        if words:
+            for j in range(40 // len(words)):
+                new_s += ' ' + strs[i]
+            summary_word = str(classify_text(new_s)).replace('/', '')
+            url_and_keyword.append((search_for_image(summary_word), summary_word))
 
     ''' testing '''
     print('strs:\n', strs)
@@ -38,6 +48,7 @@ def final_audio_from_image(img_path, audio_outpath):
 
     # Make audio
     voiceOutput(pitch_offsets, genders, strs, audio_outpath)
+    return url_and_keyword
 
 
 if __name__ == '__main__':
@@ -45,5 +56,5 @@ if __name__ == '__main__':
     image_path = sys.argv[1]
     audio_outpath = 'output.mp3'
     # image_path = 'test-quotes.jpeg'
-    final_audio_from_image(image_path, audio_outpath)
+    print(final_audio_from_image(image_path, audio_outpath))
 
