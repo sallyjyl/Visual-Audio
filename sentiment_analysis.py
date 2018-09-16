@@ -55,12 +55,30 @@ def search_for_image(input_keyword):
     search_query = "https://www.googleapis.com/customsearch/v1?key=AIzaSyCVPDYrTm2h_keElXO1iAW-PW5RAlujEtg&cx=017480567514037437480%3Akvmd1lv2ahm&q=" + str(input_keyword) + "&searchType=image&fileType=jpg&imgSize=medium&num=1"
     # r = requests.get("https://www.googleapis.com/customsearch/v1?key=AIzaSyCVPDYrTm2h_keElXO1iAW-PW5RAlujEtg&cx=017480567514037437480%3Akvmd1lv2ahm&q=flower&searchType=image&fileType=jpg&imgSize=medium&num=1")
     r = requests.get(search_query)
-    # print(r.status_code)
-    # print(r.json())
 
     intermediate = r.json()
 
 
     return intermediate["items"][0]["link"]
 
-# print(search_for_image(str(classify_text(test_text))))
+
+test_text = " today is a great day for travelling, we should go and explore the lake tahoe area for the great views of emerald bay"
+
+# output_url = search_for_image(str(classify_text(test_text))) # add this to find the url of the image that relates to each sentence
+
+
+
+def download_jpg(pic_url):
+	with open('pic_1.jpg', 'wb+') as handle:
+	        response = requests.get(pic_url, stream=True)
+
+	        if not response.ok:
+	            print(response)
+
+	        for block in response.iter_content(1024):
+	            if not block:
+	                break
+
+	            handle.write(block)
+
+# download_jpg(output_url) #add this for actually downloading the picture to the local directory from the url given.
