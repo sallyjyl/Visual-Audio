@@ -9,8 +9,6 @@ from google.cloud import language_v1
 from google.cloud.language import types
 from google.cloud.language_v1 import enums
 
-from text_to_speech import detectLanguage
-
 def analyze_sentiment(content):
 
     client = language_v1.LanguageServiceClient()
