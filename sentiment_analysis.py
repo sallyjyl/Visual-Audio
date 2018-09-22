@@ -9,6 +9,8 @@ from google.cloud import language_v1
 from google.cloud.language import types
 from google.cloud.language_v1 import enums
 
+from text_to_speech import detectLanguage
+
 def analyze_sentiment(content):
 
     client = language_v1.LanguageServiceClient()
@@ -34,7 +36,8 @@ def classify_text(text):
 
     document = types.Document(
         content=text.encode('utf-8'),
-        type=enums.Document.Type.PLAIN_TEXT)
+        type=enums.Document.Type.PLAIN_TEXT,
+        language='en')
 
     categories = client.classify_text(document).categories
 
