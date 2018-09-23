@@ -7,3 +7,4 @@ google-cloud-vision
 google-cloud-language
 google-cloud-texttospeech
 google-cloud-translate
+gunicorn
