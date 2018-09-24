@@ -7,6 +7,7 @@
 import os
 import flask
 import time
+import mimetypes
 
 from werkzeug.utils import secure_filename
 
@@ -14,11 +15,11 @@ from werkzeug.utils import secure_filename
 
 import computer
 
-UPLOAD_FOLDER = 'text_images'
+#UPLOAD_FOLDER = 'text_images'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'bmp'])
 
 app = flask.Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+#app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = os.urandom(16)
 
 @app.route('/')
@@ -50,19 +51,20 @@ def uploads():
             return flask.redirect(flask.request.url)
         file = flask.request.files['file']
         # if user does not select file, browser also
-        # submit an empty part without filename
+        # submits an empty part without filename
         if file.filename == '':
             flask.flash('No selected file')
             return flask.redirect(flask.request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename) + str(time.time())
             #print('file: ' + filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            if not os.path.exists(app.config['UPLOAD_FOLDER']):
-                os.makedirs(app.config['UPLOAD_FOLDER'])
-            file.save(filepath)
+            #filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            #if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            #    os.makedirs(app.config['UPLOAD_FOLDER'])
+            #file.save(filepath)
             url_and_keyword = computer.final_audio_from_image(
-                    filepath, filename+'.mp3')
+            #        filepath, filename+'.mp3')
+                    file, filename+'.mp3')
             #mixer.init()
             #mixer.music.load(filename+'.mp3')
             #mixer.music.play()
@@ -89,7 +91,18 @@ def uploads():
 
 @app.route('/text_sound/<filename>')
 def sound_file(filename):
-    return flask.send_from_directory('./', filename)
+    with open(filename, 'rb') as f:
+        data = f.read()
+
+    def generate():
+        yield data
+    
+    file_mimetype = mimetypes.guess_type(filename)[0] \
+            or 'application/octet-stream'
+    os.remove(filename)
+    return flask.Response(generate(), mimetype=file_mimetype)
+
+    #return flask.send_from_directory('./', filename)
 
 @app.route('/VisualAudio.jpg')
 def vis_audio():

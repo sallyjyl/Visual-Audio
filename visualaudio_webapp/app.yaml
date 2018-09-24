@@ -1,5 +1,8 @@
 runtime: python37
 entrypoint: gunicorn -b :$PORT appserver:app
+env_variables:
+  GOOGLE_APPLICATION_CREDENTIALS: 'HackMIT2018-91c47755f66a.json'
+
 
 handlers:
   # This handler routes all requests not caught above to your main app. It is

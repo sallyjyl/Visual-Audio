@@ -4,9 +4,9 @@ from OCR import *
 from sentiment_analysis import *
 from text_to_speech import *
 
-def final_audio_from_image(img_path, audio_outpath):
+def final_audio_from_image(img_file, audio_outpath):
 
-    text = image_ocr(img_path)
+    text = image_ocr(img_file)
     strs, quoted_indices = split_str_and_get_quoted(text)
 
     # Calculate sentiment for each string
@@ -54,8 +54,9 @@ def final_audio_from_image(img_path, audio_outpath):
 
 if __name__ == '__main__':
     import sys
-    image_path = sys.argv[1]
+    #image_path = sys.argv[1]
     audio_outpath = 'output.mp3'
     # image_path = 'test-quotes.jpeg'
-    print(final_audio_from_image(image_path, audio_outpath))
+    with open(sys.argv[1], 'rb') as image_file:
+        print(final_audio_from_image(image_file, audio_outpath))
 

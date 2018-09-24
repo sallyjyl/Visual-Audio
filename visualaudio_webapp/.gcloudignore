@@ -19,3 +19,5 @@ __pycache__/
 # Uploaded and generated pictures and audio_
 /*.mp3
 /text_images/*
+
+/test-txt.jpeg

@@ -5,13 +5,14 @@ import re
 # Google Cloud APIs
 from google.cloud import vision
 
-def image_ocr(file_path):
+def image_ocr(file):
     # Get client
     client = vision.ImageAnnotatorClient()
 
     # Image raw bytes
-    with io.open(file_path, 'rb') as file:
-        content = file.read()
+    #with io.open(file_path, 'rb') as file:
+    #    content = file.read()
+    content = file.read()
 
     image = vision.types.Image(content=content)
     # Perform OCR through cloud
@@ -47,7 +48,9 @@ def split_str_and_get_quoted(text):
 
 
 if __name__ == '__main__':
-    text = image_ocr('test-txt.jpeg')
+    with io.open('test-txt.jpeg', 'rb') as file:
+        text = image_ocr(file)
+    #text = image_ocr('test-txt.jpeg')
     strs, quoted_indices = split_str_and_get_quoted(text)
 
 
