@@ -9,9 +9,10 @@ from google.cloud import translate
 def clip_value(val, lo, hi):
     return min(hi, max(val, lo))
 
-def voiceOutput(pitchInput, genderInput, textInput, filename):
-    with open(filename, 'wb') as out:
+def voiceOutput(pitchInput, genderInput, textInput):#, filename):
+    #with open(filename, 'wb') as out:
         # Set the text input to be synthesized
+        audio_data = b''
         for i in range (len(textInput)):
             # Instantiates a client
             client = texttospeech.TextToSpeechClient()
@@ -49,12 +50,14 @@ def voiceOutput(pitchInput, genderInput, textInput, filename):
 
             #responseArray.extend(response)
 
-            out.write(response.audio_content)
+            #out.write(response.audio_content)
+            audio_data += response.audio_content
+        return audio_data
         # The response's audio_content is binary.
             # Write the response to the output file.
             #for response in responseArray:
 
-    print("Audio content written to file " + filename)
+    #print("Audio content written to file " + filename)
 
 def detectLanguage(text):
     translate_client = translate.Client()

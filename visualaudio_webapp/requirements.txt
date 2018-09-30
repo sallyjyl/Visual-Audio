@@ -1,10 +1,10 @@
-requests==2.12.4
-six==1.10.0
-Werkzeug==0.14.1
-Flask==1.0.2
-protobuf==3.6.1
+requests
+Flask
 google-cloud-vision
 google-cloud-language
 google-cloud-texttospeech
 google-cloud-translate
+google-cloud-storage
 gunicorn
+urllib3
+uuid

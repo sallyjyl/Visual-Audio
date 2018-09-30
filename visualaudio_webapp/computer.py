@@ -4,7 +4,7 @@ from OCR import *
 from sentiment_analysis import *
 from text_to_speech import *
 
-def final_audio_from_image(img_file, audio_outpath):
+def final_audio_from_image(img_file):#, audio_outpath):
 
     text = image_ocr(img_file)
     strs, quoted_indices = split_str_and_get_quoted(text)
@@ -47,9 +47,9 @@ def final_audio_from_image(img_file, audio_outpath):
             genders.append(default_gender)
 
     # Make audio
-    voiceOutput(pitch_offsets, genders, strs, audio_outpath)
+    voice_audio = voiceOutput(pitch_offsets, genders, strs)#, audio_outpath)
     print(url_and_keyword)
-    return url_and_keyword
+    return url_and_keyword, voice_audio
 
 
 if __name__ == '__main__':
@@ -58,5 +58,8 @@ if __name__ == '__main__':
     audio_outpath = 'output.mp3'
     # image_path = 'test-quotes.jpeg'
     with open(sys.argv[1], 'rb') as image_file:
-        print(final_audio_from_image(image_file, audio_outpath))
-
+        #print(final_audio_from_image(image_file, audio_outpath))
+        urls, audio = final_audio_from_image(image_file)
+    with open(audio_outpath, 'wb') as audio_file:
+        audio_file.write(audio)
+    print(urls)

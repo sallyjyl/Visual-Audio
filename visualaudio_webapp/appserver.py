@@ -1,19 +1,23 @@
-# Find your machines IP address
 # python3 appserver.py
 #
-# Open web browser on another device connected to same LAN
-# Go to <IP address>:5000
+# For own machine
+# 127.0.0.1:5000
+#
+# For another device connected to same LAN
+# Go to <server IP address>:5000
 
 import os
 import flask
-import time
+#import time
 import mimetypes
+import uuid
 
 from werkzeug.utils import secure_filename
 
 #from pygame import mixer
 
 import computer
+import storage
 
 #UPLOAD_FOLDER = 'text_images'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif', 'bmp'])
@@ -24,6 +28,7 @@ app.secret_key = os.urandom(16)
 
 @app.route('/')
 def root():
+    #print ('ip ' + flask.request.remote_addr)
     return flask.redirect(flask.url_for('uploads'))
 
 def allowed_file(filename):
@@ -56,24 +61,32 @@ def uploads():
             flask.flash('No selected file')
             return flask.redirect(flask.request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename) + str(time.time())
+            filename = secure_filename(file.filename)# + str(time.time())
             #print('file: ' + filename)
             #filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             #if not os.path.exists(app.config['UPLOAD_FOLDER']):
             #    os.makedirs(app.config['UPLOAD_FOLDER'])
             #file.save(filepath)
-            url_and_keyword = computer.final_audio_from_image(
+            url_and_keyword, voice_audio = computer.final_audio_from_image(file)
             #        filepath, filename+'.mp3')
-                    file, filename+'.mp3')
+            #        file, filename+'.mp3')
+
             #mixer.init()
             #mixer.music.load(filename+'.mp3')
             #mixer.music.play()
 
+            if 'user' not in flask.session:
+                flask.session['user'] = str(uuid.uuid4())
+
+            audio_filename = filename +'.mp3'
+            storage.upload_data(flask.session['user'] + '/' + audio_filename,
+                voice_audio)
+
             upload_html += '''
             <audio controls>
-              <source src="text_sound/%s.mp3" type="audio/mp3">
+              <source src="text_sound/%s" type="audio/mp3">
             </audio>
-            ''' % filename
+            ''' % audio_filename
 
             for (url, keyword) in url_and_keyword:
                 print (url +' ' + keyword)
@@ -89,17 +102,23 @@ def uploads():
 #def uploaded_file(filename):
 #    return flask.send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/text_sound/<filename>')
+@app.route('/text_sound/<path:filename>')
 def sound_file(filename):
-    with open(filename, 'rb') as f:
-        data = f.read()
+    if 'user' not in flask.session:
+        flask.session['user'] = str(uuid.uuid4())
+    
+    filepath = flask.session['user'] + '/' + filename
+    #with open(filename, 'rb') as f:
+    #    data = f.read()
+    data = storage.download_data(filepath)
 
     def generate():
         yield data
     
     file_mimetype = mimetypes.guess_type(filename)[0] \
             or 'application/octet-stream'
-    os.remove(filename)
+    #os.remove(filename)
+    #delete(filename)
     return flask.Response(generate(), mimetype=file_mimetype)
 
     #return flask.send_from_directory('./', filename)
