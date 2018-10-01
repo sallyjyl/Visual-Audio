@@ -1,1 +1,5 @@
 __pycache__
+
+# Uploaded and generated pictures and audio_
+/audiovisual_webapp/*.mp3
+/audiovisual_webapp/text_images/*
