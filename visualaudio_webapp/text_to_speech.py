@@ -6,6 +6,20 @@ Note: ssml must be well-formed according to:
 from google.cloud import texttospeech
 from google.cloud import translate
 
+##Hardcoded list for supported list"
+VOICE={
+  "en-US": {
+     "f" : {
+        "Standard": ["C", "E"],
+        "Wavenet": ["C", "E", "F"]
+     },
+     "m" : {
+        "Standard": ["B", "D"],
+        "Wavenet": ["A", "B", "D"]
+     }
+  }
+}
+
 def clip_value(val, lo, hi):
     return min(hi, max(val, lo))
 
@@ -21,17 +35,23 @@ def voiceOutput(pitchInput, genderInput, textInput):#, filename):
             # Hardcode to skip non enlglish
             if lang != 'en':
                 continue
+            lang = matchCountryCode(lang)
 
             synthesis_input = texttospeech.types.SynthesisInput(text=textInput[i])
+
             if (genderInput[i] == 'f'):
                 gender = texttospeech.enums.SsmlVoiceGender.FEMALE
             else:
                 gender = texttospeech.enums.SsmlVoiceGender.MALE
 
+            name_input=returnVoiceName(lang, genderInput[i], "Wavenet")
+
+            print (name_input);
             # Build the voice request, select the language code ("en-US") and the ssml
             # voice gender ("neutral")
             voice = texttospeech.types.VoiceSelectionParams(
                 language_code=lang,
+                name=name_input,
                 ssml_gender=gender)
 
             pace = 0.8
@@ -80,3 +100,7 @@ def matchCountryCode(lang):
             return lang+"-"+lang.upper()
     else: ##Not supported by google
         return "en-US"
+
+def returnVoiceName(lang, gender, voiceType):
+    ##Currently by default return the first one available.
+    return lang + "-" + voiceType + "-" + VOICE[lang][gender][voiceType][0]

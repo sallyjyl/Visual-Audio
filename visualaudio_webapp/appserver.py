@@ -67,7 +67,7 @@ def uploads():
             #if not os.path.exists(app.config['UPLOAD_FOLDER']):
             #    os.makedirs(app.config['UPLOAD_FOLDER'])
             #file.save(filepath)
-            url_and_keyword, voice_audio = computer.final_audio_from_image(file)
+            url_and_keyword, voice_audio = computer.final_audio_from_image(file, filename=filename)
             #        filepath, filename+'.mp3')
             #        file, filename+'.mp3')
 
@@ -106,7 +106,7 @@ def uploads():
 def sound_file(filename):
     if 'user' not in flask.session:
         flask.session['user'] = str(uuid.uuid4())
-    
+
     filepath = flask.session['user'] + '/' + filename
     #with open(filename, 'rb') as f:
     #    data = f.read()
@@ -114,7 +114,7 @@ def sound_file(filename):
 
     def generate():
         yield data
-    
+
     file_mimetype = mimetypes.guess_type(filename)[0] \
             or 'application/octet-stream'
     #os.remove(filename)
