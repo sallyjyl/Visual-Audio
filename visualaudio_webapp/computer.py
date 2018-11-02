@@ -4,9 +4,9 @@ from OCR import *
 from sentiment_analysis import *
 from text_to_speech import *
 
-def final_audio_from_image(img_file):#, audio_outpath):
+def final_audio_from_image(img_file, filename=None):#, audio_outpath):
 
-    text = image_ocr(img_file)
+    text = image_ocr(img_file, filename)
     strs, quoted_indices = split_str_and_get_quoted(text)
 
     # Calculate sentiment for each string
