@@ -11,6 +11,7 @@ import flask
 #import time
 import mimetypes
 import uuid
+import io
 
 from werkzeug.utils import secure_filename
 
@@ -37,16 +38,8 @@ def allowed_file(filename):
 
 @app.route('/uploads', methods=['GET', 'POST'])
 def uploads():
-    upload_html = '''
-    <!doctype html>
-    <img src="VisualAudio.jpg" alt="VisualAudio" width="30%" height="30%">
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    audio_filename = None
+    url_and_keyword = []
 
     if flask.request.method == 'POST':
         print (flask.request)
@@ -82,21 +75,11 @@ def uploads():
             storage.upload_data(flask.session['user'] + '/' + audio_filename,
                 voice_audio)
 
-            upload_html += '''
-            <audio controls>
-              <source src="text_sound/%s" type="audio/mp3">
-            </audio>
-            ''' % audio_filename
-
             for (url, keyword) in url_and_keyword:
                 print (url +' ' + keyword)
-                upload_html += '<h1>%s</h1>\n' % keyword
-                upload_html += '<img src="%s" alt="%s">\n' % (url, keyword)
-            return upload_html
-            #return flask.redirect(flask.url_for('uploaded_file',
-            #                        filename=filename))
 
-    return upload_html
+    return flask.render_template('upload.html', 
+        audiofile=audio_filename, url_keyword=url_and_keyword)
 
 #@app.route('/uploads/<filename>')
 #def uploaded_file(filename):
@@ -112,14 +95,12 @@ def sound_file(filename):
     #    data = f.read()
     data = storage.download_data(filepath)
 
-    def generate():
-        yield data
-
-    file_mimetype = mimetypes.guess_type(filename)[0] \
-            or 'application/octet-stream'
+    #file_mimetype = mimetypes.guess_type(filename)[0] \
+    #        or 'application/octet-stream'
     #os.remove(filename)
     #delete(filename)
-    return flask.Response(generate(), mimetype=file_mimetype)
+
+    return flask.send_file(io.BytesIO(data), attachment_filename=filename)
 
     #return flask.send_from_directory('./', filename)
 

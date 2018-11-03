@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+    <title>Visual Audio</title>
+</head>
+
+<body>
+    <img src="VisualAudio.jpg" alt="VisualAudio" width="30%" height="30%">
+
+    <h1>Upload New File</h1>
+
+    <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+
+{% if audiofile %}
+    <audio controls>
+        <source src="text_sound/{{ audiofile }}" type="audio/mp3">
+    </audio>
+{% endif %}
+
+{% for url, keyword in url_keyword %}
+    <h1>{{ keyword }}</h1>
+    <img src="{{ url }}" alt="{{ keyword }}">
+{% endfor %}
+</body>
+</html>
