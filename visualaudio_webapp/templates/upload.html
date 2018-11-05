@@ -2,28 +2,36 @@
 <html lang=en>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Visual Audio</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 
 <body>
+<div class=top>
     <img src="VisualAudio.jpg" alt="VisualAudio" width="30%" height="30%">
-
+</div>
+<div class="content">
     <h1>Upload New File</h1>
 
     <form method=post enctype=multipart/form-data>
         <input type=file name=file>
-        <input type=submit value=Upload>
+        <!--<input type=submit value=Upload>-->
+        <button type=submit>Upload</button>
     </form>
 
 {% if audiofile %}
+<div class=generated-audio>
     <audio controls>
         <source src="text_sound/{{ audiofile }}" type="audio/mp3">
     </audio>
+</div>
 {% endif %}
 
 {% for url, keyword in url_keyword %}
     <h1>{{ keyword }}</h1>
     <img src="{{ url }}" alt="{{ keyword }}">
 {% endfor %}
+</div>
 </body>
 </html>
