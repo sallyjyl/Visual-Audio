@@ -62,6 +62,26 @@ h1,h2,p {
     text-align: center;
 }
 
+p a {
+    text-decoration: none;
+}
+
+p a:link {
+    color: #dddddd;
+}
+
+p a:visited {
+    color: #dddddd;
+}
+
+p a:hover {
+    color: white;
+}
+
+p a:active {
+    color: #9efc32;
+}
+
 form {
     /* overflow: auto;
     white-space: nowrap; */
